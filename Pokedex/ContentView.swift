@@ -7,15 +7,72 @@
 
 import SwiftUI
 
+
+// MARK: - ContentView
 struct ContentView: View {
+    @State var pokemon: [PokemonResource] = []
+    @StateObject var repository: Repository = Repository()
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        List(repository.pokemonResources, id: \.self) { item in
+            switch item {
+            case .resource(let resource):
+                Cell(name: resource.name.capitalized, types: [])
+            default:
+                Cell()
+            }
+        }
+        .environmentObject(repository)
+        .onAppear {
+            Task {
+                repository.startFetchingPages()
+            }
+        }
     }
 }
 
+// MARK: - Cell
+struct Cell: View {
+    var name: String?
+    var types: [NamedAPIResource]?
+    let imageSize = 40.0
+    var image: Image = Image(systemName: "photo")
+    var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
+//    var typeNames: [String] = ["Electric", "Fairy"]
+    let veryLightGray = Color(white: 0.8)
+    let evenLighterGray = Color(white: 0.9)
+
+    var body: some View {
+        HStack{
+            image.fixedSize().frame(width: imageSize, height: imageSize, alignment: .center)
+            VStack(alignment: .leading) {
+                // name
+                switch name {
+                case .some(let name):
+                    Text(name)
+                case .none:
+                    Text(String(repeating: " ", count: 32)).background(veryLightGray)
+                }
+
+                // type(s)
+                switch typeNames.isEmpty {
+                case true:
+                    Text(String(repeating: " ", count: 32)).background(evenLighterGray)
+                case false:
+                    Text(typeNames.joined(separator: " / "))
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding([.vertical], 2.0)
+    }
+}
+
+
+// MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(Repository())
     }
 }

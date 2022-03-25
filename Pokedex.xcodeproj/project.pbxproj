@@ -14,6 +14,10 @@
 		DF18FEBC27EB783500ECCB1A /* PokedexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEBB27EB783500ECCB1A /* PokedexTests.swift */; };
 		DF18FEC627EB783500ECCB1A /* PokedexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEC527EB783500ECCB1A /* PokedexUITests.swift */; };
 		DF18FEC827EB783500ECCB1A /* PokedexUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEC727EB783500ECCB1A /* PokedexUITestsLaunchTests.swift */; };
+		DF18FED527EB889B00ECCB1A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FED427EB889B00ECCB1A /* Models.swift */; };
+		DF18FED727EBA3CD00ECCB1A /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FED627EBA3CD00ECCB1A /* Services.swift */; };
+		DF18FED927ED19CA00ECCB1A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FED827ED19C900ECCB1A /* Repository.swift */; };
+		DF18FEDB27EE483200ECCB1A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEDA27EE483200ECCB1A /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		DF18FEC127EB783500ECCB1A /* PokedexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokedexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF18FEC527EB783500ECCB1A /* PokedexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexUITests.swift; sourceTree = "<group>"; };
 		DF18FEC727EB783500ECCB1A /* PokedexUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DF18FED427EB889B00ECCB1A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		DF18FED627EBA3CD00ECCB1A /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		DF18FED827ED19C900ECCB1A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		DF18FEDA27EE483200ECCB1A /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +104,10 @@
 			children = (
 				DF18FEAA27EB783200ECCB1A /* PokedexApp.swift */,
 				DF18FEAC27EB783200ECCB1A /* ContentView.swift */,
+				DF18FEDA27EE483200ECCB1A /* Helpers.swift */,
+				DF18FED427EB889B00ECCB1A /* Models.swift */,
+				DF18FED827ED19C900ECCB1A /* Repository.swift */,
+				DF18FED627EBA3CD00ECCB1A /* Services.swift */,
 				DF18FEAE27EB783500ECCB1A /* Assets.xcassets */,
 				DF18FEB027EB783500ECCB1A /* Preview Content */,
 			);
@@ -257,6 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF18FED527EB889B00ECCB1A /* Models.swift in Sources */,
+				DF18FEDB27EE483200ECCB1A /* Helpers.swift in Sources */,
+				DF18FED727EBA3CD00ECCB1A /* Services.swift in Sources */,
+				DF18FED927ED19CA00ECCB1A /* Repository.swift in Sources */,
 				DF18FEAD27EB783200ECCB1A /* ContentView.swift in Sources */,
 				DF18FEAB27EB783200ECCB1A /* PokedexApp.swift in Sources */,
 			);
