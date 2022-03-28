@@ -11,6 +11,20 @@ enum PokemonResource: Equatable, Hashable {
     case none
     case resource(NamedAPIResource)
     case pokemon(Pokemon)
+
+    var asResource: NamedAPIResource? {
+        if case .resource(let resource) = self {
+            return resource
+        }
+        return nil
+    }
+
+    var asPokemon: Pokemon? {
+        if case .pokemon(let pokemon) = self {
+            return pokemon
+        }
+        return nil
+    }
 }
 
 // MARK: - NamedAPIResourceList
@@ -40,25 +54,35 @@ struct Pokemon: Codable, Equatable, Hashable {
     let id: Int
     let name: String
     let sprites: Sprites
-    let poketypes: [NamedAPIResource]
+    let poketypeSlots: [PoketypeSlot]
+
+    func getTypes() -> [NamedAPIResource] {
+        poketypeSlots.sorted(by: { $0.slot < $1.slot }).map({ $0.typeResource })
+    }
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case sprites
-        case poketypes = "types"
+        case poketypeSlots = "types"
     }
 }
 
 // MARK: - Sprites
 struct Sprites: Codable, Equatable, Hashable {
-    let frontDefault: String
-    let frontShiny: String
+    let frontDefault: String?
+    let frontShiny: String?
 }
 
-// MARK: - Poketypes
-struct Poketype: Codable, Equatable, Hashable {
-    // intentionally left blank (for now)
+// MARK: - Poketype Slots
+struct PoketypeSlot: Codable, Equatable, Hashable {
+    let slot: Int
+    let typeResource: NamedAPIResource
+
+    enum CodingKeys: String, CodingKey {
+        case slot
+        case typeResource = "type"
+    }
 }
 
 // MARK: - Decoder

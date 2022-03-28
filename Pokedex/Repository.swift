@@ -26,6 +26,14 @@ import Foundation
         currentPokemonPage += 1
     }
 
+    func replaceResourceWithPokemon(url: String, pokemon: Pokemon) {
+        guard let resourceIndex = pokemonResources.firstIndex(where: { $0.asResource?.url == url }) else {
+            print("Error in \(#function): Could not locate Pokemon Resource with URL == \(url).")
+            return
+        }
+        pokemonResources[resourceIndex] = .pokemon(pokemon)
+    }
+
     func updatePokemonArrayWithResources(_ new: [PokemonResource]) {
         if new.isEmpty {
             return
@@ -57,6 +65,18 @@ import Foundation
                 Task {
                     await Wait.waitFor(seconds: 0.500)
                     await self.fetchNextPage()
+                }
+            }
+            Task(priority: .medium) {
+                for resource in page.results {
+                    Task(priority: .low) {
+                        do {
+                            let pokemon = try await Services.shared.fetchPokemon(at: resource.url)
+                            replaceResourceWithPokemon(url: resource.url, pokemon: pokemon)
+                        } catch (let error) {
+                            print("Error: Unable to obtain Pokemon due to \(error).")
+                        }
+                    }
                 }
             }
         } catch (let error) {

@@ -37,4 +37,19 @@ class Services {
         let (data, _) = try await session.data(for: request, delegate: nil)
         return try Services.decoder.decode(NamedAPIResourceList.self, from: data)
     }
+
+    func fetchPokemon(at url: String) async throws -> Pokemon {
+        guard let url = URL(string: url) else {
+            print("Error in \(#function): Unable to convert \(url) to URL.")
+            throw ServiceError.stringIsNotValidURL
+        }
+        let request = URLRequest(url: url)
+        let (data, _) = try await session.data(for: request, delegate: nil)
+        let decodedPokemon = try Services.decoder.decode(Pokemon.self, from: data)
+        return decodedPokemon
+    }
+}
+
+enum ServiceError: Error {
+    case stringIsNotValidURL
 }

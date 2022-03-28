@@ -14,10 +14,12 @@ struct ContentView: View {
     @StateObject var repository: Repository = Repository()
 
     var body: some View {
-        List(repository.pokemonResources, id: \.self) { item in
+        List(repository.pokemonResources, id: \.self) { item in // TODO: add internalID based on Index
             switch item {
             case .resource(let resource):
                 Cell(name: resource.name.capitalized, types: [])
+            case .pokemon(let pokemon):
+                Cell(name: pokemon.name.capitalized, types: pokemon.getTypes())
             default:
                 Cell()
             }
