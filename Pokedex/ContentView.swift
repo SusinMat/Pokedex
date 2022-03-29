@@ -42,7 +42,7 @@ struct PokemonCell: View {
 
     @EnvironmentObject var repository: Repository
 
-    let imageSize = 40.0
+    let imageSize = 80.0
     @State var imageData: Data?
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
     let veryLightGray = Color(white: 0.8)
@@ -57,7 +57,7 @@ struct PokemonCell: View {
 
     var body: some View {
         HStack{
-            Image(uiImage: uiImage).frame(width: imageSize, height: imageSize, alignment: .center).scaledToFit()
+            Image(uiImage: uiImage).resizable().aspectRatio(contentMode: .fit).frame(height: imageSize)
             VStack(alignment: .leading) {
                 // name
                 switch name {
