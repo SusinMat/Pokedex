@@ -42,7 +42,7 @@ struct PokemonCell: View {
 
     @EnvironmentObject var repository: Repository
 
-    let imageSize = 80.0
+    let imageSize = 60.0
     @State var imageData: Data?
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
     let veryLightGray = Color(white: 0.8)
@@ -50,7 +50,7 @@ struct PokemonCell: View {
 
     var uiImage: UIImage {
         if let imageData = imageData, let uiImage = UIImage(data: imageData) {
-            return uiImage
+            return uiImage.trimmingTransparentPixels() ?? uiImage
         }
         return UIImage(systemName: "photo") ?? UIImage()
     }
