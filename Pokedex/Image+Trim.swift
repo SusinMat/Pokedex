@@ -28,19 +28,19 @@ import AppKit
 #endif
 
 #if canImport(UIKit)
-typealias Image = UIImage
+typealias TrimmableImage = UIImage
 #else
-typealias Image = NSImage
+typealias TrimmableImage = NSImage
 #endif
 
-extension Image {
+extension TrimmableImage {
 
     /// Crops the insets of transparency around the image.
     ///
     /// - Parameters:
     ///   - maximumAlphaChannel: The maximum alpha channel value to consider  _transparent_ and thus crop. Any alpha value
     ///         strictly greater than `maximumAlphaChannel` will be considered opaque.
-    func trimmingTransparentPixels(maximumAlphaChannel: UInt8 = 0) -> Image? {
+    func trimmingTransparentPixels(maximumAlphaChannel: UInt8 = 0) -> TrimmableImage? {
         guard size.height > 1 && size.width > 1
             else { return self }
 
