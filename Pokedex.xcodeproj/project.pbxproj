@@ -18,6 +18,7 @@
 		DF18FED727EBA3CD00ECCB1A /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FED627EBA3CD00ECCB1A /* Services.swift */; };
 		DF18FED927ED19CA00ECCB1A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FED827ED19C900ECCB1A /* Repository.swift */; };
 		DF18FEDB27EE483200ECCB1A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEDA27EE483200ECCB1A /* Helpers.swift */; };
+		DF18FEDD27F38ADB00ECCB1A /* Image+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEDC27F38ADA00ECCB1A /* Image+Trim.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		DF18FED627EBA3CD00ECCB1A /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		DF18FED827ED19C900ECCB1A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		DF18FEDA27EE483200ECCB1A /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		DF18FEDC27F38ADA00ECCB1A /* Image+Trim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Trim.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				DF18FEAA27EB783200ECCB1A /* PokedexApp.swift */,
 				DF18FEAC27EB783200ECCB1A /* ContentView.swift */,
 				DF18FEDA27EE483200ECCB1A /* Helpers.swift */,
+				DF18FEDC27F38ADA00ECCB1A /* Image+Trim.swift */,
 				DF18FED427EB889B00ECCB1A /* Models.swift */,
 				DF18FED827ED19C900ECCB1A /* Repository.swift */,
 				DF18FED627EBA3CD00ECCB1A /* Services.swift */,
@@ -269,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF18FEDD27F38ADB00ECCB1A /* Image+Trim.swift in Sources */,
 				DF18FED527EB889B00ECCB1A /* Models.swift in Sources */,
 				DF18FEDB27EE483200ECCB1A /* Helpers.swift in Sources */,
 				DF18FED727EBA3CD00ECCB1A /* Services.swift in Sources */,
