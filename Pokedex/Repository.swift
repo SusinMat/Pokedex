@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 @MainActor class Repository: ObservableObject {
     var currentPokemonPage: Int = 0
     @Published var pokemonResources: [PokemonResource] = []
-    @Published var images: [String: Data] = [:]
+    @Published var images: [String: UIImage] = [:]
 
     func flushPokemonResourceArray() {
         pokemonResources = []
@@ -28,7 +29,9 @@ import Foundation
     }
 
     func updateImage(url: String, imageData: Data) {
-        images[url] = imageData
+        if let uiImage = UIImage(data: imageData) {
+            images[url] = uiImage.trimmingTransparentPixels() ?? uiImage
+        }
     }
 
     func replaceResourceWithPokemon(url: String, pokemon: Pokemon) {
@@ -89,18 +92,17 @@ import Foundation
         }
     }
 
-
-    func retrieveOrFetchImage(url: String) async -> Data? {
+    func retrieveOrFetchImage(url: String) async -> UIImage? {
         do {
-            if let data = images[url] {
-                return data
+            if let image = images[url] {
+                return image
             }
             let data = try await Services.shared.fetchImage(url: url)
             updateImage(url: url, imageData: data)
-            return data
+            return images[url]
         } catch (let error) {
             print("Error in \(#function): \(error)")
+            return nil
         }
-        return nil
     }
 }

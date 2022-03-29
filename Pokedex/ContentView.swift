@@ -43,21 +43,20 @@ struct PokemonCell: View {
     @EnvironmentObject var repository: Repository
 
     let imageSize = 60.0
-    @State var imageData: Data?
+    @State var storedImage: UIImage?
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
     let veryLightGray = Color(white: 0.8)
     let evenLighterGray = Color(white: 0.9)
+    static let defaultImage = UIImage(systemName: "photo")!
 
-    var uiImage: UIImage {
-        if let imageData = imageData, let uiImage = UIImage(data: imageData) {
-            return uiImage.trimmingTransparentPixels() ?? uiImage
-        }
-        return UIImage(systemName: "photo") ?? UIImage()
+    var imageToBeDisplayed: UIImage {
+        return storedImage ?? PokemonCell.defaultImage
     }
 
     var body: some View {
         HStack{
-            Image(uiImage: uiImage).resizable().aspectRatio(contentMode: .fit).frame(height: imageSize)
+            Image(uiImage: imageToBeDisplayed)
+                .resizable().aspectRatio(contentMode: .fit).frame(width: imageSize, height: imageSize)
             VStack(alignment: .leading) {
                 // name
                 switch name {
@@ -94,8 +93,7 @@ struct PokemonCell: View {
         guard let imageURL = imageURL else {
             return
         }
-        let imageData = await repository.retrieveOrFetchImage(url: imageURL)
-        self.imageData = imageData
+        storedImage = await repository.retrieveOrFetchImage(url: imageURL)
     }
 }
 
