@@ -14,14 +14,15 @@ struct ContentView: View {
     @StateObject var repository: Repository = Repository()
 
     var body: some View {
-        List(repository.pokemonResources, id: \.self) { item in // TODO: add internalID based on Index
+        List(repository.pokemonResources, id: \.self) { item in
             switch item {
             case .resource(let resource):
-                Cell(name: resource.name.capitalized)
+                PokemonCell(name: resource.name.capitalized)
             case .pokemon(let pokemon):
-                Cell(name: pokemon.name.capitalized, types: pokemon.getTypes(), imageURL: pokemon.sprites.frontDefault)
+                PokemonCell(name: pokemon.name.capitalized, types: pokemon.getTypes(), imageURL: pokemon.sprites.frontDefault)
+                    .environmentObject(repository)
             default:
-                Cell()
+                PokemonCell()
             }
         }
         .environmentObject(repository)
@@ -33,21 +34,30 @@ struct ContentView: View {
     }
 }
 
-// MARK: - Cell
-struct Cell: View {
+// MARK: - Pokemon Cell
+struct PokemonCell: View {
     var name: String?
     var types: [NamedAPIResource]?
     var imageURL: String?
 
+    @EnvironmentObject var repository: Repository
+
     let imageSize = 40.0
-    var image: Image = Image(systemName: "photo")
+    @State var imageData: Data?
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
     let veryLightGray = Color(white: 0.8)
     let evenLighterGray = Color(white: 0.9)
 
+    var uiImage: UIImage {
+        if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+            return uiImage
+        }
+        return UIImage(systemName: "photo") ?? UIImage()
+    }
+
     var body: some View {
         HStack{
-            image.fixedSize().frame(width: imageSize, height: imageSize, alignment: .center)
+            Image(uiImage: uiImage).frame(width: imageSize, height: imageSize, alignment: .center).scaledToFit()
             VStack(alignment: .leading) {
                 // name
                 switch name {
@@ -73,6 +83,19 @@ struct Cell: View {
             }
         }
         .padding([.vertical], 2.0)
+        .onAppear(perform: {
+            Task {
+                await retrieveImage()
+            }
+        })
+    }
+
+    func retrieveImage() async {
+        guard let imageURL = imageURL else {
+            return
+        }
+        let imageData = await repository.retrieveOrFetchImage(url: imageURL)
+        self.imageData = imageData
     }
 }
 
