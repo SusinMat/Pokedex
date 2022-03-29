@@ -17,7 +17,7 @@ import Foundation
     }
 
     func newPokemonResourceArray(count: Int) {
-        pokemonResources = Array(repeating: .none, count: count)
+        pokemonResources = (1...count).map({ PokemonResource.none($0) })
         currentPokemonPage = 0
     }
 
@@ -38,7 +38,7 @@ import Foundation
         if new.isEmpty {
             return
         }
-        guard let insertionPosition = pokemonResources.firstIndex(where: { $0 == PokemonResource.none }) else {
+        guard let insertionPosition = pokemonResources.firstIndex(where: { $0.isNone }) else {
             print("Error: Attempt to fill complete array.")
             return
         }

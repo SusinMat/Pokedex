@@ -8,7 +8,7 @@
 import Foundation
 
 enum PokemonResource: Equatable, Hashable {
-    case none
+    case none(Int)
     case resource(NamedAPIResource)
     case pokemon(Pokemon)
 
@@ -24,6 +24,13 @@ enum PokemonResource: Equatable, Hashable {
             return pokemon
         }
         return nil
+    }
+
+    var isNone: Bool {
+        if case PokemonResource.none = self {
+            return true
+        }
+        return false
     }
 }
 

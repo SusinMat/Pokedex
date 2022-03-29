@@ -17,9 +17,9 @@ struct ContentView: View {
         List(repository.pokemonResources, id: \.self) { item in // TODO: add internalID based on Index
             switch item {
             case .resource(let resource):
-                Cell(name: resource.name.capitalized, types: [])
+                Cell(name: resource.name.capitalized)
             case .pokemon(let pokemon):
-                Cell(name: pokemon.name.capitalized, types: pokemon.getTypes())
+                Cell(name: pokemon.name.capitalized, types: pokemon.getTypes(), imageURL: pokemon.sprites.frontDefault)
             default:
                 Cell()
             }
@@ -37,10 +37,11 @@ struct ContentView: View {
 struct Cell: View {
     var name: String?
     var types: [NamedAPIResource]?
+    var imageURL: String?
+
     let imageSize = 40.0
     var image: Image = Image(systemName: "photo")
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
-//    var typeNames: [String] = ["Electric", "Fairy"]
     let veryLightGray = Color(white: 0.8)
     let evenLighterGray = Color(white: 0.9)
 
@@ -65,6 +66,10 @@ struct Cell: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
+            }
+            if name == nil || types == nil {
+                Spacer()
+                ProgressView().progressViewStyle(.circular).padding(.trailing, 8.0)
             }
         }
         .padding([.vertical], 2.0)
