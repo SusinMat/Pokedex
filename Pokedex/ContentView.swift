@@ -11,7 +11,11 @@ import SwiftUI
 // MARK: - ContentView
 struct ContentView: View {
     @State var pokemon: [PokemonResource] = []
-    @StateObject var repository: Repository = Repository()
+    @StateObject var repository: Repository
+
+    init() {
+        self._repository = StateObject(wrappedValue: Repository()) // sets the default value
+    }
 
     var body: some View {
         List(repository.pokemonResources, id: \.self) { item in
