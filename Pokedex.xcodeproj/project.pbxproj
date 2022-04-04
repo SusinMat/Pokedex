@@ -19,6 +19,7 @@
 		DF18FED927ED19CA00ECCB1A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FED827ED19C900ECCB1A /* Repository.swift */; };
 		DF18FEDB27EE483200ECCB1A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEDA27EE483200ECCB1A /* Helpers.swift */; };
 		DF18FEDD27F38ADB00ECCB1A /* Image+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF18FEDC27F38ADA00ECCB1A /* Image+Trim.swift */; };
+		DFCD4B9F27FB2F600035F005 /* PokemonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCD4B9E27FB2F600035F005 /* PokemonCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		DF18FED827ED19C900ECCB1A /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		DF18FEDA27EE483200ECCB1A /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		DF18FEDC27F38ADA00ECCB1A /* Image+Trim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Trim.swift"; sourceTree = "<group>"; };
+		DFCD4B9E27FB2F600035F005 /* PokemonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			children = (
 				DF18FEAA27EB783200ECCB1A /* PokedexApp.swift */,
 				DF18FEAC27EB783200ECCB1A /* ContentView.swift */,
+				DFCD4B9E27FB2F600035F005 /* PokemonCell.swift */,
 				DF18FEDA27EE483200ECCB1A /* Helpers.swift */,
 				DF18FEDC27F38ADA00ECCB1A /* Image+Trim.swift */,
 				DF18FED427EB889B00ECCB1A /* Models.swift */,
@@ -277,6 +280,7 @@
 				DF18FEDB27EE483200ECCB1A /* Helpers.swift in Sources */,
 				DF18FED727EBA3CD00ECCB1A /* Services.swift in Sources */,
 				DF18FED927ED19CA00ECCB1A /* Repository.swift in Sources */,
+				DFCD4B9F27FB2F600035F005 /* PokemonCell.swift in Sources */,
 				DF18FEAD27EB783200ECCB1A /* ContentView.swift in Sources */,
 				DF18FEAB27EB783200ECCB1A /* PokedexApp.swift in Sources */,
 			);
