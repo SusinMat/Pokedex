@@ -43,12 +43,22 @@ struct ContentView: View {
 
 // MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
-    @StateObject static var repository = Repository()
+    @StateObject static var repository: Repository = Repository()
 
     static var previews: some View {
         ContentView.init(repository: repository)
             .onAppear {
-                repository.newPokemonResourceArray(count: 2)
+                repository.mockData()
             }
+    }
+}
+
+extension Repository {
+    func mockData() {
+        self.newPokemonResourceArray(count: 3)
+        self.appendPokemonResourceArray([
+            PokemonResource.resource(NamedAPIResource(name: "Foo", url: "https://example.com")),
+            PokemonResource.resource(NamedAPIResource(name: "Bar", url: "https://example.com"))
+        ])
     }
 }
