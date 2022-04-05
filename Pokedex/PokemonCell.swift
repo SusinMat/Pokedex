@@ -28,7 +28,7 @@ struct PokemonCell: View {
     }
 
     var body: some View {
-        HStack{
+        HStack {
             Image(uiImage: imageToBeDisplayed)
                 .resizable().aspectRatio(contentMode: .fit).frame(width: imageSize, height: imageSize)
             VStack(alignment: .leading) {

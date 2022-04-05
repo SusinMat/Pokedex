@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum PokemonResource: Equatable, Hashable {
     case none(Int)
     case resource(NamedAPIResource)
@@ -64,7 +65,7 @@ struct Pokemon: Codable, Equatable, Hashable {
     let poketypeSlots: [PoketypeSlot]
 
     func getTypes() -> [NamedAPIResource] {
-        poketypeSlots.sorted(by: { $0.slot < $1.slot }).map({ $0.typeResource })
+        poketypeSlots.sorted(by: { $0.slot < $1.slot }).map({ $0.`type` })
     }
 
     enum CodingKeys: String, CodingKey {
@@ -84,12 +85,7 @@ struct Sprites: Codable, Equatable, Hashable {
 // MARK: - Poketype Slots
 struct PoketypeSlot: Codable, Equatable, Hashable {
     let slot: Int
-    let typeResource: NamedAPIResource
-
-    enum CodingKeys: String, CodingKey {
-        case slot
-        case typeResource = "type"
-    }
+    let `type`: NamedAPIResource
 }
 
 // MARK: - Decoder

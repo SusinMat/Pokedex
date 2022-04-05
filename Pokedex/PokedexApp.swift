@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 @main
 struct PokedexApp: App {
     init() {
