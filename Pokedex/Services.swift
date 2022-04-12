@@ -13,7 +13,7 @@ class Services {
     var session: URLSession { return URLSession.shared }
     static let decoder = SnakeCaseJSONDecoder()
 
-    var pokemonPageSize = 25
+    var pokemonPageSize = 100
 
     static let shared: Services = {
         let instance = Services()
