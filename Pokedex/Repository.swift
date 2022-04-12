@@ -14,6 +14,8 @@ import UIKit
     @Published var pokemonResources: [PokemonResource] = []
     @Published var images: [String: UIImage] = [:]
 
+
+    // MARK: - Self-writing functions
     func flushPokemonResourceArray() {
         pokemonResources = []
         currentPokemonPage = 0
@@ -33,6 +35,10 @@ import UIKit
         if let uiImage = UIImage(data: imageData) {
             images[url] = uiImage.trimmingTransparentPixels() ?? uiImage
         }
+    }
+
+    func updateImage(url: String, image: UIImage) {
+        images[url] = image
     }
 
     func replaceResourceWithPokemon(url: String, pokemon: Pokemon) {
@@ -66,6 +72,7 @@ import UIKit
         currentPokemonPage += 1
     }
 
+    // MARK: - Fetch functions
     func startFetchingPages() {
         Task {
             currentPokemonPage = 0
@@ -122,6 +129,33 @@ import UIKit
             let data = try await Services.shared.fetchImage(url: url)
             updateImage(url: url, imageData: data)
             return images[url]
+        } catch (let error) {
+            print("Error in \(#function): \(error)")
+            return nil
+        }
+    }
+}
+
+
+// MARK: - Image Cache Helper
+class ImageCacheHelper {
+    static func retrieveOrFetchImage(url: String, repository: Repository) async -> UIImage? {
+        do {
+            if let image = await repository.images[url] {
+                return image
+            }
+            let data = try await Services.shared.fetchImage(url: url)
+            let uiImage = UIImage(data: data)
+            let trimmedUIImage = uiImage?.trimmingTransparentPixels()
+            if let trimmedUIImage = trimmedUIImage {
+                await repository.updateImage(url: url, image: trimmedUIImage)
+                return trimmedUIImage
+            } else if let uiImage = uiImage {
+                print("Error in \(#function): Unable to trim an instance of UIImage.")
+                await repository.updateImage(url: url, image: uiImage)
+                return uiImage
+            }
+            return nil
         } catch (let error) {
             print("Error in \(#function): \(error)")
             return nil

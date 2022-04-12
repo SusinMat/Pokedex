@@ -57,7 +57,7 @@ struct PokemonCell: View {
         }
         .padding([.vertical], 2.0)
         .onAppear(perform: {
-            Task {
+            Task.detached {
                 await retrieveImage()
             }
         })
@@ -67,6 +67,7 @@ struct PokemonCell: View {
         guard let imageURL = imageURL else {
             return
         }
-        storedImage = await repository.retrieveOrFetchImage(url: imageURL)
+        let image = await ImageCacheHelper.retrieveOrFetchImage(url: imageURL, repository: repository)
+        storedImage = image
     }
 }
