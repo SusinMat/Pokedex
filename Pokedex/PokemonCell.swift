@@ -57,7 +57,7 @@ struct PokemonCell: View {
         }
         .padding([.vertical], 2.0)
         .onAppear(perform: {
-            Task.detached {
+            Task {
                 await retrieveImage()
             }
         })

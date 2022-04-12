@@ -94,7 +94,7 @@ import UIKit
                 }
             }
 
-            Task.detached(priority: .medium) {
+            Task {
                 let urlToPokemon = await withTaskGroup(of: (String, Pokemon)?.self,
                                                        returning: [String: Pokemon].self) { taskGroup in
                     for resource in page.results {
