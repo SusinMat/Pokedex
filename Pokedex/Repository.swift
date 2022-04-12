@@ -89,7 +89,9 @@ import UIKit
             updatePokemonArrayWithResources(page.results.map({ PokemonResource.resource($0) }))
             if page.next != nil {
                 Task {
-                    await Wait.waitFor(seconds: 0.500)
+                    if PokedexApp.throttlingRequestsIsRequired {
+                        await Wait.waitFor(seconds: 0.500)
+                    }
                     await self.fetchNextPage()
                 }
             }
@@ -114,7 +116,7 @@ import UIKit
                     }
                     return urlToPokemon
                 }
-                await self.replaceResourcesWithPokemon(urlToPokemon: urlToPokemon)
+                self.replaceResourcesWithPokemon(urlToPokemon: urlToPokemon)
             }
         } catch (let error) {
             print("Error in \(#function): \(error)")

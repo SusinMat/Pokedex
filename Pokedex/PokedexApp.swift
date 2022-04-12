@@ -12,7 +12,7 @@ import SwiftUI
 struct PokedexApp: App {
     init() {
         print("App init() is running!")
-        if isInDebugMode {
+        if PokedexApp.isInDebugMode {
             Task {
                 await PokedexApp.printFirstPage()
             }
@@ -27,8 +27,9 @@ struct PokedexApp: App {
 }
 
 // MARK: - Debug Functions
-extension App {
-    var isInDebugMode: Bool { return false }
+extension PokedexApp {
+    static var isInDebugMode: Bool { return false }
+    static var throttlingRequestsIsRequired: Bool { return false }
 }
 
 extension PokedexApp {
