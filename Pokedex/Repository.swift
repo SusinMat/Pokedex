@@ -43,6 +43,16 @@ import UIKit
         pokemonResources[resourceIndex] = .pokemon(pokemon)
     }
 
+    func replaceResourcesWithPokemon(urlToPokemon: [String: Pokemon]) {
+        for (url, pokemon) in urlToPokemon {
+            guard let resourceIndex = pokemonResources.firstIndex(where: { $0.asResource?.url == url }) else {
+                print("Error in \(#function): Could not locate Pokemon Resource with URL == \(url).")
+                return
+            }
+            pokemonResources[resourceIndex] = .pokemon(pokemon)
+        }
+    }
+
     func updatePokemonArrayWithResources(_ new: [PokemonResource]) {
         if new.isEmpty {
             return
@@ -76,17 +86,28 @@ import UIKit
                     await self.fetchNextPage()
                 }
             }
-            Task(priority: .medium) {
-                for resource in page.results {
-                    Task(priority: .low) {
-                        do {
-                            let pokemon = try await Services.shared.fetchPokemon(at: resource.url)
-                            replaceResourceWithPokemon(url: resource.url, pokemon: pokemon)
-                        } catch (let error) {
-                            print("Error: Unable to obtain Pokemon due to \(error).")
+
+            Task.detached(priority: .medium) {
+                let urlToPokemon = await withTaskGroup(of: (String, Pokemon)?.self,
+                                                       returning: [String: Pokemon].self) { taskGroup in
+                    for resource in page.results {
+                        taskGroup.addTask {
+                            do {
+                                let pokemon = try await Services.shared.fetchPokemon(at: resource.url)
+                                return (resource.url, pokemon)
+                            } catch (let error) {
+                                print("Error: Unable to obtain Pokemon due to \(error).")
+                            }
+                            return nil
                         }
                     }
+                    var urlToPokemon: [String: Pokemon] = [:]
+                    for await result in taskGroup.compactMap({ $0 }) {
+                        urlToPokemon[result.0] = result.1
+                    }
+                    return urlToPokemon
                 }
+                await self.replaceResourcesWithPokemon(urlToPokemon: urlToPokemon)
             }
         } catch (let error) {
             print("Error in \(#function): \(error)")
