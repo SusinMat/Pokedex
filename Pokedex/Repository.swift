@@ -31,9 +31,11 @@ import UIKit
         currentPokemonPage += 1
     }
 
-    func updateImage(url: String, imageData: Data) {
+
+    nonisolated func trimAndUpdateImage(url: String, imageData: Data) async {
         if let uiImage = UIImage(data: imageData) {
-            images[url] = uiImage.trimmingTransparentPixels() ?? uiImage
+            let trimmedImage = uiImage.trimmingTransparentPixels() ?? uiImage
+            await updateImage(url: url, image: trimmedImage)
         }
     }
 
@@ -73,22 +75,20 @@ import UIKit
     }
 
     // MARK: - Fetch functions
-    func startFetchingPages() {
-        Task {
-            currentPokemonPage = 0
-            await fetchNextPage()
-        }
+    func startFetchingPages() async {
+        currentPokemonPage = 0
+        await fetchNextPage()
     }
 
-    func fetchNextPage() async {
+    nonisolated func fetchNextPage() async {
         do {
             let page = try await Services.shared.fetchPage(pageNumber: currentPokemonPage)
             if page.previous == nil {
-                newPokemonResourceArray(count: page.count)
+                await newPokemonResourceArray(count: page.count)
             }
-            updatePokemonArrayWithResources(page.results.map({ PokemonResource.resource($0) }))
+            await updatePokemonArrayWithResources(page.results.map({ PokemonResource.resource($0) }))
             if page.next != nil {
-                Task {
+                Task.detached {
                     if PokedexApp.throttlingRequestsIsRequired {
                         await Wait.waitFor(seconds: 0.500)
                     }
@@ -96,7 +96,7 @@ import UIKit
                 }
             }
 
-            Task {
+            Task.detached {
                 let urlToPokemon = await withTaskGroup(of: (String, Pokemon)?.self,
                                                        returning: [String: Pokemon].self) { taskGroup in
                     for resource in page.results {
@@ -116,21 +116,21 @@ import UIKit
                     }
                     return urlToPokemon
                 }
-                self.replaceResourcesWithPokemon(urlToPokemon: urlToPokemon)
+                await self.replaceResourcesWithPokemon(urlToPokemon: urlToPokemon)
             }
         } catch (let error) {
             print("Error in \(#function): \(error)")
         }
     }
 
-    func retrieveOrFetchImage(url: String) async -> UIImage? {
+    nonisolated func retrieveOrFetchImage(url: String) async -> UIImage? {
         do {
-            if let image = images[url] {
+            if let image = await images[url] {
                 return image
             }
             let data = try await Services.shared.fetchImage(url: url)
-            updateImage(url: url, imageData: data)
-            return images[url]
+            await trimAndUpdateImage(url: url, imageData: data)
+            return await images[url]
         } catch (let error) {
             print("Error in \(#function): \(error)")
             return nil

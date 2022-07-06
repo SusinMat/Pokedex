@@ -35,7 +35,7 @@ struct ContentView: View {
         .environmentObject(repository)
         .onAppear {
             Task {
-                repository.startFetchingPages()
+                await repository.startFetchingPages()
             }
         }
     }
