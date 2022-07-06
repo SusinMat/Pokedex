@@ -21,12 +21,14 @@ struct ContentView: View {
     }
 
     var body: some View {
-        List(repository.pokemonResources, id: \.self) { item in
+        List(repository.pokemonResources, id: \.id) { item in
             switch item {
             case .resource(let resource):
                 PokemonCell(name: resource.name.capitalized)
             case .pokemon(let pokemon):
-                PokemonCell(name: pokemon.name.capitalized, types: pokemon.getTypes(), imageURL: pokemon.sprites.frontDefault)
+                PokemonCell(name: pokemon.name.capitalized,
+                            types: pokemon.getTypes(),
+                            imageURL: pokemon.sprites.frontDefault)
                     .environmentObject(repository)
             default:
                 PokemonCell()

@@ -13,6 +13,17 @@ enum PokemonResource: Equatable, Hashable {
     case resource(NamedAPIResource)
     case pokemon(Pokemon)
 
+    var id: Int {
+        switch self {
+        case .none(let id):
+            return id
+        case .resource(let resource):
+            return resource.url.hashValue
+        case .pokemon(let pokemon):
+            return pokemon.name.hashValue
+        }
+    }
+
     var asResource: NamedAPIResource? {
         if case .resource(let resource) = self {
             return resource
