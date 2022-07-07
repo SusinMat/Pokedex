@@ -10,12 +10,20 @@ import SwiftUI
 struct SpriteView: View {
     var imageURL: String?
     var imageSize: CGFloat
+
     @EnvironmentObject var repository: Repository
+
     @State var storedImage: UIImage?
+
     static let defaultImage = UIImage(systemName: "photo")!
 
     var imageToBeDisplayed: UIImage {
         return storedImage ?? Self.defaultImage
+    }
+
+    init(imageURL: String?, imageSize: CGFloat) {
+        self.imageURL = imageURL
+        self.imageSize = imageSize
     }
 
     var body: some View {

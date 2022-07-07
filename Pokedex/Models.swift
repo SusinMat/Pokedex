@@ -79,6 +79,14 @@ struct Pokemon: Codable, Equatable, Hashable {
         poketypeSlots.sorted(by: { $0.slot < $1.slot }).map({ $0.`type` })
     }
 
+    var typeNames: [String] {
+        return getTypes().map({ $0.name.capitalized })
+    }
+
+    var hasOwnEntry: Bool {
+        return id <= 10_000
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case name

@@ -23,6 +23,7 @@
 		DFEFD009287607B9002ECB25 /* PokemonInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEFD008287607B8002ECB25 /* PokemonInfoView.swift */; };
 		DFEFD00B28770B44002ECB25 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEFD00A28770B44002ECB25 /* Mocks.swift */; };
 		DFEFD00D287726AA002ECB25 /* SpriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEFD00C287726AA002ECB25 /* SpriteView.swift */; };
+		DFEFD00F28773BAF002ECB25 /* SwiftUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEFD00E28773BAF002ECB25 /* SwiftUIExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		DFEFD008287607B8002ECB25 /* PokemonInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonInfoView.swift; sourceTree = "<group>"; };
 		DFEFD00A28770B44002ECB25 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		DFEFD00C287726AA002ECB25 /* SpriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteView.swift; sourceTree = "<group>"; };
+		DFEFD00E28773BAF002ECB25 /* SwiftUIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				DFCD4B9E27FB2F600035F005 /* PokemonCell.swift */,
 				DFEFD00C287726AA002ECB25 /* SpriteView.swift */,
 				DFEFD008287607B8002ECB25 /* PokemonInfoView.swift */,
+				DFEFD00E28773BAF002ECB25 /* SwiftUIExtensions.swift */,
 				DF18FEDA27EE483200ECCB1A /* Helpers.swift */,
 				DF18FEDC27F38ADA00ECCB1A /* Image+Trim.swift */,
 				DF18FED427EB889B00ECCB1A /* Models.swift */,
@@ -293,6 +296,7 @@
 				DF18FED927ED19CA00ECCB1A /* Repository.swift in Sources */,
 				DFCD4B9F27FB2F600035F005 /* PokemonCell.swift in Sources */,
 				DF18FEAD27EB783200ECCB1A /* ContentView.swift in Sources */,
+				DFEFD00F28773BAF002ECB25 /* SwiftUIExtensions.swift in Sources */,
 				DF18FEAB27EB783200ECCB1A /* PokedexApp.swift in Sources */,
 				DFEFD00B28770B44002ECB25 /* Mocks.swift in Sources */,
 			);
