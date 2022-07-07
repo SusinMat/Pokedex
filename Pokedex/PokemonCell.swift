@@ -37,13 +37,13 @@ struct PokemonCell: View {
                 case .some(let name):
                     Text(name)
                 case .none:
-                    Text(String(repeating: " ", count: 32)).background(veryLightGray)
+                    EmptyTextLabel(color: veryLightGray)
                 }
 
                 // type(s)
                 switch typeNames.isEmpty {
                 case true:
-                    Text(String(repeating: " ", count: 32)).background(evenLighterGray)
+                    EmptyTextLabel(color: evenLighterGray)
                 case false:
                     Text(typeNames.joined(separator: " / "))
                         .font(.subheadline)
@@ -61,6 +61,13 @@ struct PokemonCell: View {
                 await retrieveImage()
             }
         })
+    }
+
+    struct EmptyTextLabel: View {
+        var color: Color
+        var body: some View {
+            Text(String(repeating: " ", count: 32)).background(color)
+        }
     }
 
     func retrieveImage() async {
