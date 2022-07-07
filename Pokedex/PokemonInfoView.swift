@@ -35,11 +35,12 @@ struct PokemonInfoView: View {
                 tabView.center()
                 type.center()
                 VStack {
-                    PropertyCell(Measurement.height, pokemon.height)
-                    Divider()
-                    PropertyCell(Measurement.weight, pokemon.weight)
-                    Divider()
-                    PropertyCell("Base Experience", pokemon.baseExperience)
+                    ForEach(propertyCells, id: \.id) { view in
+                        view
+                        if view != propertyCells.last {
+                            Divider()
+                        }
+                    }
                 }
                 .padding([.vertical], 5.0)
                 .padding([.horizontal], 10.0)
@@ -49,6 +50,14 @@ struct PokemonInfoView: View {
             }
         }
         .navigationTitle(title)
+    }
+
+    var propertyCells: [PropertyCell] {
+        return [
+            PropertyCell(Measurement.height, pokemon.height),
+            PropertyCell(Measurement.weight, pokemon.weight),
+            PropertyCell("Base Experience", pokemon.baseExperience),
+        ]
     }
 
     var tabView: some View {
@@ -94,7 +103,7 @@ struct PokemonInfoView: View {
 
 // MARK: - Property Cell
 extension PokemonInfoView {
-    struct PropertyCell: View {
+    struct PropertyCell: View, Equatable {
         @State var title: String
         @State var value: String
 
@@ -121,6 +130,14 @@ extension PokemonInfoView {
             } else {
                 self.value = Self.unknownPropertyString
             }
+        }
+
+        var id: Int {
+            [title, value].hashValue
+        }
+
+        static func == (lhs: PokemonInfoView.PropertyCell, rhs: PokemonInfoView.PropertyCell) -> Bool {
+            lhs.id == rhs.id
         }
 
         var body: some View {
