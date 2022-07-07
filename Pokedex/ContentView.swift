@@ -28,10 +28,12 @@ struct ContentView: View {
                 PokemonCell(name: resource.name.capitalized)
             case .pokemon(let pokemon):
                 let name = pokemon.name.capitalized
-                PokemonCell(name: name,
-                            types: pokemon.getTypes(),
-                            imageURL: pokemon.sprites.frontDefault)
-                .environmentObject(repository)
+                NavigationLink(destination: PokemonInfoView(pokemon: pokemon)) {
+                    PokemonCell(name: name,
+                                types: pokemon.getTypes(),
+                                imageURL: pokemon.sprites.frontDefault)
+                    .environmentObject(repository)
+                }
             default:
                 PokemonCell()
             }
