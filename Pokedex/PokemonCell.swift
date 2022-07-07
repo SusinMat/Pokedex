@@ -29,8 +29,7 @@ struct PokemonCell: View {
 
     var body: some View {
         HStack {
-            Image(uiImage: imageToBeDisplayed)
-                .resizable().aspectRatio(contentMode: .fit).frame(width: imageSize, height: imageSize)
+            SpriteView(image: imageToBeDisplayed, imageSize: imageSize)
             VStack(alignment: .leading) {
                 // name
                 switch name {
@@ -45,9 +44,7 @@ struct PokemonCell: View {
                 case true:
                     EmptyTextLabel(color: evenLighterGray)
                 case false:
-                    Text(typeNames.joined(separator: " / "))
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                    TypeLabel(typeNames: typeNames)
                 }
             }
             if name == nil || types == nil {
@@ -57,7 +54,7 @@ struct PokemonCell: View {
         }
         .padding([.vertical], 2.0)
         .onAppear(perform: {
-            Task {
+            Task.detached {
                 await retrieveImage()
             }
         })
@@ -67,6 +64,24 @@ struct PokemonCell: View {
         var color: Color
         var body: some View {
             Text(String(repeating: " ", count: 32)).background(color)
+        }
+    }
+
+    struct TypeLabel: View {
+        var typeNames: [String]
+        var body: some View {
+            Text(typeNames.joined(separator: " / "))
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+    }
+
+    struct SpriteView: View {
+        var image: UIImage
+        var imageSize: CGFloat
+        var body: some View {
+            Image(uiImage: image)
+                .resizable().aspectRatio(contentMode: .fit).frame(width: imageSize, height: imageSize)
         }
     }
 
