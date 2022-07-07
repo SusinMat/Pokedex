@@ -166,6 +166,7 @@ struct PokemonInfoView_Previews: PreviewProvider {
         let testPokemon = Mocks.venusaur
         NavigationView {
             PokemonInfoView(pokemon: testPokemon)
+                .environmentObject(Repository())
         }
     }
 }
