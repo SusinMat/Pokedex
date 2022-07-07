@@ -74,6 +74,9 @@ struct Pokemon: Codable, Equatable, Hashable {
     let name: String
     let sprites: Sprites
     let poketypeSlots: [PoketypeSlot]
+    let height: Int?
+    let weight: Int?
+    let baseExperience: Int?
 
     func getTypes() -> [NamedAPIResource] {
         poketypeSlots.sorted(by: { $0.slot < $1.slot }).map({ $0.`type` })
@@ -92,6 +95,9 @@ struct Pokemon: Codable, Equatable, Hashable {
         case name
         case sprites
         case poketypeSlots = "types"
+        case height
+        case weight
+        case baseExperience
     }
 }
 
