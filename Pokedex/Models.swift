@@ -78,12 +78,12 @@ struct Pokemon: Codable, Equatable, Hashable {
     let weight: Int?
     let baseExperience: Int?
 
-    func getTypes() -> [NamedAPIResource] {
+    var types: [NamedAPIResource] {
         poketypeSlots.sorted(by: { $0.slot < $1.slot }).map({ $0.`type` })
     }
 
     var typeNames: [String] {
-        return getTypes().map({ $0.name.capitalized })
+        return types.map({ $0.name.capitalized })
     }
 
     var hasOwnEntry: Bool {

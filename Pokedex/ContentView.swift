@@ -30,7 +30,7 @@ struct ContentView: View {
                 let name = pokemon.name.capitalized
                 NavigationLink(destination: PokemonInfoView(pokemon: pokemon).environmentObject(repository)) {
                     PokemonCell(name: name,
-                                types: pokemon.getTypes(),
+                                types: pokemon.types,
                                 imageURL: pokemon.sprites.frontDefault)
                     .environmentObject(repository)
                 }

@@ -15,11 +15,12 @@ struct PokemonCell: View {
     var imageURL: String?
 
     @EnvironmentObject var repository: Repository
+    @Environment(\.colorScheme) var colorScheme
 
     let imageSize = 60.0
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
-    let veryLightGray = Color(white: 0.8)
-    let evenLighterGray = Color(white: 0.9)
+    var nameLabelUnavailableColor: Color { return colorWithWhiteInvertedForDarkMode(white: 0.75) }
+    var typeLabelUnavailableColor: Color { return colorWithWhiteInvertedForDarkMode(white: 0.85) }
 
     var body: some View {
         HStack {
@@ -31,13 +32,13 @@ struct PokemonCell: View {
                 case .some(let name):
                     Text(name)
                 case .none:
-                    EmptyTextLabel(color: veryLightGray)
+                    EmptyTextLabel(color: nameLabelUnavailableColor)
                 }
 
                 // type(s)
                 switch typeNames.isEmpty {
                 case true:
-                    EmptyTextLabel(color: evenLighterGray)
+                    EmptyTextLabel(color: typeLabelUnavailableColor)
                 case false:
                     TypeLabel(typeNames: typeNames)
                 }
@@ -63,6 +64,14 @@ struct PokemonCell: View {
             Text(typeNames.joined(separator: " / "))
                 .font(.subheadline)
                 .foregroundColor(.gray)
+        }
+    }
+
+    func colorWithWhiteInvertedForDarkMode(white: CGFloat) -> Color {
+        if colorScheme == .light {
+            return Color(white: white)
+        } else {
+            return Color(white: 1.0 - white)
         }
     }
 }
