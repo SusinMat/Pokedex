@@ -11,6 +11,7 @@ import SwiftUI
 // MARK: - ContentView
 struct ContentView: View {
     @StateObject var repository: Repository
+    let title = "Pokédex"
 
     init() {
         self._repository = StateObject(wrappedValue: Repository()) // sets the default value
@@ -26,18 +27,22 @@ struct ContentView: View {
             case .resource(let resource):
                 PokemonCell(name: resource.name.capitalized)
             case .pokemon(let pokemon):
-                PokemonCell(name: pokemon.name.capitalized,
+                let name = pokemon.name.capitalized
+                PokemonCell(name: name,
                             types: pokemon.getTypes(),
                             imageURL: pokemon.sprites.frontDefault)
-                    .environmentObject(repository)
+                .environmentObject(repository)
             default:
                 PokemonCell()
             }
         }
         .environmentObject(repository)
+        .navigationTitle(title)
         .onAppear {
-            Task {
-                await repository.startFetchingPages()
+            Task.detached {
+                if await repository.pokemonResources.isEmpty {
+                    await repository.startFetchingPages()
+                }
             }
         }
     }
@@ -50,17 +55,9 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView.init(repository: repository)
             .onAppear {
-                repository.mockData()
+                Task {
+                    await Mocks.mock(repository: repository)
+                }
             }
-    }
-}
-
-extension Repository {
-    func mockData() {
-        self.newPokemonResourceArray(count: 3)
-        self.appendPokemonResourceArray([
-            PokemonResource.resource(NamedAPIResource(name: "Foo", url: "https://example.com")),
-            PokemonResource.resource(NamedAPIResource(name: "Bar", url: "https://example.com"))
-        ])
     }
 }

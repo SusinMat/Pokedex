@@ -90,7 +90,22 @@ struct Pokemon: Codable, Equatable, Hashable {
 // MARK: - Sprites
 struct Sprites: Codable, Equatable, Hashable {
     let frontDefault: String?
+    let frontFemale: String?
     let frontShiny: String?
+    let frontShinyFemale: String?
+}
+
+extension Sprites {
+    init(id: Int) {
+        func makeSpriteURL(sprite: Services.SpriteRoute) -> String{
+            return Services.makeSpriteURL(id: id, sprite: sprite)
+        }
+        let sprites = Sprites(frontDefault: makeSpriteURL(sprite: .frontDefault),
+                              frontFemale: makeSpriteURL(sprite: .frontFemale),
+                              frontShiny: makeSpriteURL(sprite: .frontShiny),
+                              frontShinyFemale: makeSpriteURL(sprite: .frontShinyFemale))
+        self = sprites
+    }
 }
 
 // MARK: - Poketype Slots
