@@ -21,9 +21,7 @@ struct PokedexApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                ContentView()
-            }
+            ContentView()
             .navigationViewStyle(.stack) // should allow .columns on iPad, but this is causing constraint errors...
         }
     }

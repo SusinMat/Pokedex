@@ -32,10 +32,10 @@ import UIKit
     }
 
 
-    nonisolated func trimAndUpdateImage(url: String, imageData: Data) async {
+    func trimAndUpdateImage(url: String, imageData: Data) {
         if let uiImage = UIImage(data: imageData) {
             let trimmedImage = uiImage.trimmingTransparentPixels() ?? uiImage
-            await updateImage(url: url, image: trimmedImage)
+            updateImage(url: url, image: trimmedImage)
         }
     }
 
@@ -80,13 +80,13 @@ import UIKit
         await fetchNextPage()
     }
 
-    nonisolated func fetchNextPage() async {
+    func fetchNextPage() async {
         do {
             let page = try await Services.shared.fetchPage(pageNumber: currentPokemonPage)
             if page.previous == nil {
-                await newPokemonResourceArray(count: page.count)
+                newPokemonResourceArray(count: page.count)
             }
-            await updatePokemonArrayWithResources(page.results.map({ PokemonResource.resource($0) }))
+            updatePokemonArrayWithResources(page.results.map({ PokemonResource.resource($0) }))
             if page.next != nil {
                 Task.detached {
                     if PokedexApp.throttlingRequestsIsRequired {
@@ -123,14 +123,14 @@ import UIKit
         }
     }
 
-    nonisolated func retrieveOrFetchImage(url: String) async -> UIImage? {
+    func retrieveOrFetchImage(url: String) async -> UIImage? {
         do {
-            if let image = await images[url] {
+            if let image = images[url] {
                 return image
             }
             let data = try await Services.shared.fetchImage(url: url)
-            await trimAndUpdateImage(url: url, imageData: data)
-            return await images[url]
+            trimAndUpdateImage(url: url, imageData: data)
+            return images[url]
         } catch (let error) {
             print("Error in \(#function): \(error)")
             return nil
