@@ -52,16 +52,22 @@ struct ContentView: View {
 
 // MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
-    @StateObject static var repository: Repository = Repository()
-
     static var previews: some View {
-        NavigationView {
-            ContentView(repository: repository)
-                .onAppear {
-                    Task {
-                        await Mocks.mock(repository: repository)
-                    }
-                }
+        PreviewView().preferredColorScheme(.light)
+        PreviewView().preferredColorScheme(.dark)
+    }
+
+    struct PreviewView: View {
+        @StateObject var repository: Repository
+
+        init() {
+            self._repository = StateObject(wrappedValue: Repository()) // sets the default value
+        }
+
+        var body: some View {
+            NavigationView {
+                ContentView(repository: repository)
+            }
         }
     }
 }

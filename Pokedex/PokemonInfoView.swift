@@ -164,9 +164,18 @@ extension PokemonInfoView {
 struct PokemonInfoView_Previews: PreviewProvider {
     static var previews: some View {
         let testPokemon = Mocks.venusaur
-        NavigationView {
-            PokemonInfoView(pokemon: testPokemon)
-                .environmentObject(Repository())
+        PreviewView(pokemon: testPokemon).preferredColorScheme(.light)
+        PreviewView(pokemon: testPokemon).preferredColorScheme(.dark)
+    }
+
+    struct PreviewView: View {
+        var pokemon: Pokemon
+
+        var body: some View {
+            NavigationView {
+                PokemonInfoView(pokemon: pokemon)
+                    .environmentObject(Repository())
+            }
         }
     }
 }
