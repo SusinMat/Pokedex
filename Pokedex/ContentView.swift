@@ -55,11 +55,13 @@ struct ContentView_Previews: PreviewProvider {
     @StateObject static var repository: Repository = Repository()
 
     static var previews: some View {
-        ContentView.init(repository: repository)
-            .onAppear {
-                Task {
-                    await Mocks.mock(repository: repository)
+        NavigationView {
+            ContentView(repository: repository)
+                .onAppear {
+                    Task {
+                        await Mocks.mock(repository: repository)
+                    }
                 }
-            }
+        }
     }
 }
