@@ -15,7 +15,7 @@ struct PokemonCell: View {
     var imageURL: String?
 
     @EnvironmentObject var repository: Repository
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     let imageSize = 60.0
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
