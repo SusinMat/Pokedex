@@ -11,7 +11,6 @@ import SwiftUI
 // MARK: - ContentView
 struct ContentView: View {
     @StateObject var repository: Repository
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
     let title = "Pokédex"
 
     init() {
