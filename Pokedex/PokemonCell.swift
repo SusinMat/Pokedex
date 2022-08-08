@@ -19,8 +19,8 @@ struct PokemonCell: View {
 
     let imageSize = 60.0
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
-    var nameLabelUnavailableColor: Color { return colorWithWhiteInvertedForDarkMode(white: 0.75) }
-    var typeLabelUnavailableColor: Color { return colorWithWhiteInvertedForDarkMode(white: 0.85) }
+    var nameLabelUnavailableColor: Color { return Color.whiteInvertedForDarkMode(0.75) }
+    var typeLabelUnavailableColor: Color { return Color.whiteInvertedForDarkMode(0.85) }
 
     var body: some View {
         HStack {
@@ -64,14 +64,6 @@ struct PokemonCell: View {
             Text(typeNames.joined(separator: " / "))
                 .font(.subheadline)
                 .foregroundColor(.gray)
-        }
-    }
-
-    func colorWithWhiteInvertedForDarkMode(white: CGFloat) -> Color {
-        if colorScheme == .light {
-            return Color(white: white)
-        } else {
-            return Color(white: 1.0 - white)
         }
     }
 }
