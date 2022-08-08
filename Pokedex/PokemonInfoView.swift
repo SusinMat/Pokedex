@@ -44,7 +44,6 @@ struct PokemonInfoView: View {
                 }
                 .padding([.vertical], 5.0)
                 .padding([.horizontal], 10.0)
-                .background(Color(uiColor: UIColor.secondarySystemBackground))
                 .cornerRadius(15.0)
                 .padding([.horizontal], 10.0)
             }
@@ -68,8 +67,8 @@ struct PokemonInfoView: View {
         .frame(width: UIScreen.main.bounds.width, height: imageSize + tabViewPadding)
         .tabViewStyle(.page)
         .onAppear {
-            UIPageControl.appearance().pageIndicatorTintColor = UIColor.label.withAlphaComponent(0.5)
-            UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.label
+            UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.5)
+            UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.black
         }
     }
 
@@ -142,9 +141,9 @@ extension PokemonInfoView {
 
         var body: some View {
             HStack {
-                Text(title).foregroundColor(Color(uiColor: UIColor.label))
+                Text(title).foregroundColor(Color(uiColor: UIColor.black))
                 Spacer()
-                Text(value).foregroundColor(Color(uiColor: UIColor.secondaryLabel))
+                Text(value).foregroundColor(Color(uiColor: UIColor.gray))
             }
             .frame(minWidth: 0.0, idealWidth: nil, maxWidth: UIScreen.main.bounds.width,
                    minHeight: 32.0, idealHeight: nil, maxHeight: nil,
@@ -164,8 +163,7 @@ extension PokemonInfoView {
 struct PokemonInfoView_Previews: PreviewProvider {
     static var previews: some View {
         let testPokemon = Mocks.venusaur
-        PreviewView(pokemon: testPokemon).preferredColorScheme(.light)
-        PreviewView(pokemon: testPokemon).preferredColorScheme(.dark)
+        PreviewView(pokemon: testPokemon)
     }
 
     struct PreviewView: View {

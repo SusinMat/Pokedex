@@ -53,8 +53,7 @@ struct ContentView: View {
 // MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewView().preferredColorScheme(.light)
-        PreviewView().preferredColorScheme(.dark)
+        PreviewView()
     }
 
     struct PreviewView: View {

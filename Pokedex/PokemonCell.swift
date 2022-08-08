@@ -15,12 +15,11 @@ struct PokemonCell: View {
     var imageURL: String?
 
     @EnvironmentObject var repository: Repository
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     let imageSize = 60.0
     var typeNames: [String] { (types ?? []).map({ $0.name.capitalized }) }
-    var nameLabelUnavailableColor: Color { return Color.whiteInvertedForDarkMode(0.75) }
-    var typeLabelUnavailableColor: Color { return Color.whiteInvertedForDarkMode(0.85) }
+    var nameLabelUnavailableColor: Color { return Color(white: 0.75) }
+    var typeLabelUnavailableColor: Color { return Color(white: 0.85) }
 
     var body: some View {
         HStack {
