@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 // MARK: - Wait
 class Wait {
     static func waitFor(seconds: TimeInterval) async {
