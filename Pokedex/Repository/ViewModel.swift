@@ -1,5 +1,5 @@
 //
-//  Repository.swift
+//  ViewModel.swift
 //  Pokedex
 //
 //  Created by Matheus Martins Susin on 2022-03-24.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-@MainActor class Repository: ObservableObject {
+@MainActor class ViewModel: ObservableObject {
     var currentPokemonPage: Int = 0
     @Published var pokemonResources: [PokemonResource] = []
     @Published var images: [String: UIImage] = [:]
@@ -141,20 +141,20 @@ import UIKit
 
 // MARK: - Image Cache Helper
 class ImageCacheHelper {
-    static func retrieveOrFetchImage(url: String, repository: Repository) async -> UIImage? {
+    static func retrieveOrFetchImage(url: String, viewModel: ViewModel) async -> UIImage? {
         do {
-            if let image = await repository.images[url] {
+            if let image = await viewModel.images[url] {
                 return image
             }
             let data = try await Services.shared.fetchImage(url: url)
             let uiImage = UIImage(data: data)
             let trimmedUIImage = uiImage?.trimmingTransparentPixels()
             if let trimmedUIImage = trimmedUIImage {
-                await repository.updateImage(url: url, image: trimmedUIImage)
+                await viewModel.updateImage(url: url, image: trimmedUIImage)
                 return trimmedUIImage
             } else if let uiImage = uiImage {
                 print("Error in \(#function): Unable to trim an instance of UIImage.")
-                await repository.updateImage(url: url, image: uiImage)
+                await viewModel.updateImage(url: url, image: uiImage)
                 return uiImage
             }
             return nil

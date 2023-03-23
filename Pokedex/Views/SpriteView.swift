@@ -11,7 +11,7 @@ struct SpriteView: View {
     var imageURL: String?
     var imageSize: CGFloat
 
-    @EnvironmentObject var repository: Repository
+    @EnvironmentObject var viewModel: ViewModel
 
     @State var storedImage: UIImage?
 
@@ -47,7 +47,7 @@ struct SpriteView: View {
     }
 
     func retrieveImage(url: String) async {
-        let image = await ImageCacheHelper.retrieveOrFetchImage(url: url, repository: repository)
+        let image = await ImageCacheHelper.retrieveOrFetchImage(url: url, viewModel: viewModel)
         storedImage = image
     }
 }

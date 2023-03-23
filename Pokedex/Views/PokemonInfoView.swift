@@ -20,7 +20,7 @@ struct PokemonInfoView: View {
         }
     }
 
-    @EnvironmentObject var repository: Repository
+    @EnvironmentObject var viewModel: ViewModel
 
     let imageSize = 180.0
     let tabViewPadding = 25.0
@@ -82,7 +82,7 @@ struct PokemonInfoView: View {
 
     func sprite(imageURL: String?) -> some View {
         SpriteView(imageURL: imageURL, imageSize: imageSize)
-            .environmentObject(repository)
+            .environmentObject(viewModel)
             .bottomPadding(tabViewPadding)
     }
 
@@ -174,7 +174,7 @@ struct PokemonInfoView_Previews: PreviewProvider {
         var body: some View {
             NavigationView {
                 PokemonInfoView(pokemon: pokemon)
-                    .environmentObject(Repository())
+                    .environmentObject(ViewModel())
             }
         }
     }

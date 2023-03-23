@@ -14,7 +14,7 @@ struct PokemonCell: View {
     var types: [NamedAPIResource]?
     var imageURL: String?
 
-    @EnvironmentObject var repository: Repository
+    @EnvironmentObject var viewModel: ViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     let imageSize = 60.0
@@ -25,7 +25,7 @@ struct PokemonCell: View {
     var body: some View {
         HStack {
             SpriteView(imageURL: imageURL, imageSize: imageSize)
-                .environmentObject(repository)
+                .environmentObject(viewModel)
             VStack(alignment: .leading) {
                 // name
                 switch name {

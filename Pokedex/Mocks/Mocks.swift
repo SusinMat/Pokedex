@@ -36,9 +36,9 @@ class Mocks {
         ]
     }
 
-    static func mock(repository: Repository) async {
+    static func mock(viewModel: ViewModel) async {
         let mockArray = Mocks.resourceArray
-        await repository.newPokemonResourceArray(count: mockArray.count + 1)
-        await repository.appendPokemonResourceArray(mockArray)
+        await viewModel.newPokemonResourceArray(count: mockArray.count + 1)
+        await viewModel.appendPokemonResourceArray(mockArray)
     }
 }
