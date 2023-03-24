@@ -14,21 +14,26 @@ import UIKit
     @Published var pokemonResources: [PokemonResource] = []
     @Published var images: [String: UIImage] = [:]
 
+    lazy var repository: Repository = Repository()
+
 
     // MARK: - Self-writing functions
-    func flushPokemonResourceArray() {
+    func flushPokemonResourceArray() async {
         pokemonResources = []
         currentPokemonPage = 0
+        await repository.resetPageCount()
     }
 
-    func newPokemonResourceArray(count: Int) {
+    func newPokemonResourceArray(count: Int) async {
         pokemonResources = (1...count).map({ PokemonResource.none($0) })
         currentPokemonPage = 0
+        await repository.resetPageCount()
     }
 
-    func appendPokemonResourceArray(_ new: [PokemonResource]) {
+    func appendPokemonResourceArray(_ new: [PokemonResource]) async {
         pokemonResources.append(contentsOf: new)
         currentPokemonPage += 1
+        await repository.incrementPageCount()
     }
 
 
@@ -128,36 +133,9 @@ import UIKit
             if let image = await images[url] {
                 return image
             }
-            let data = try await Services.shared.fetchImage(url: url)
+            let data = try await repository.fetchImage(url: url)
             await trimAndUpdateImage(url: url, imageData: data)
             return await images[url]
-        } catch (let error) {
-            print("Error in \(#function): \(error)")
-            return nil
-        }
-    }
-}
-
-
-// MARK: - Image Cache Helper
-class ImageCacheHelper {
-    static func retrieveOrFetchImage(url: String, viewModel: ViewModel) async -> UIImage? {
-        do {
-            if let image = await viewModel.images[url] {
-                return image
-            }
-            let data = try await Services.shared.fetchImage(url: url)
-            let uiImage = UIImage(data: data)
-            let trimmedUIImage = uiImage?.trimmingTransparentPixels()
-            if let trimmedUIImage = trimmedUIImage {
-                await viewModel.updateImage(url: url, image: trimmedUIImage)
-                return trimmedUIImage
-            } else if let uiImage = uiImage {
-                print("Error in \(#function): Unable to trim an instance of UIImage.")
-                await viewModel.updateImage(url: url, image: uiImage)
-                return uiImage
-            }
-            return nil
         } catch (let error) {
             print("Error in \(#function): \(error)")
             return nil
