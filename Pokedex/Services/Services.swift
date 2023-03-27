@@ -49,8 +49,11 @@ class Services {
         return decodedPokemon
     }
 
-
-    func fetchImage(url: URL) async throws -> Data {
+    func fetchImage(url: String) async throws -> Data {
+        guard let url = URL(string: url) else {
+            print("Error in \(#function): Unable to convert \(url) to URL.")
+            throw ServiceError.stringIsNotValidURL
+        }
         let request = URLRequest(url: url)
         let (data, _) = try await session.data(for: request, delegate: nil)
         return data

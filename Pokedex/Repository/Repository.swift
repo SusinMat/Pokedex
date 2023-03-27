@@ -20,12 +20,18 @@ actor Repository {
         currentPokemonPage += 1
     }
 
-    func fetchImage(url: String) async throws -> Data {
-        guard let url = URL(string: url) else {
-            print("Error in \(#function): Unable to convert \(url) to URL.")
-            throw ServiceError.stringIsNotValidURL
-        }
+    nonisolated func fetchImage(url: String) async throws -> Data {
         return try await service.fetchImage(url: url)
+    }
+
+    nonisolated func fetchCurrentPage() async throws -> NamedAPIResourceList {
+        let page = try await service.fetchPage(pageNumber: currentPokemonPage)
+        return page
+    }
+
+    nonisolated func fetchPokemon(at url: String) async throws -> Pokemon {
+        let pokemon = try await service.fetchPokemon(at: url)
+        return pokemon
     }
 }
 
