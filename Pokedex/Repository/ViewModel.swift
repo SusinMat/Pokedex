@@ -13,8 +13,7 @@ import UIKit
     @Published var pokemonResources: [PokemonResource] = []
     @Published var images: [String: UIImage] = [:]
 
-    lazy var repository: Repository = Repository()
-
+    lazy var repository: RepositoryProtocol = Repository()
 
     // MARK: - Self-writing functions
     func flushPokemonResourceArray() async {
@@ -32,6 +31,9 @@ import UIKit
         await repository.incrementPageCount()
     }
 
+    func setRepository(_ repository: RepositoryProtocol) {
+        self.repository = repository
+    }
 
     nonisolated func trimAndUpdateImage(url: String, imageData: Data) async {
         if let uiImage = UIImage(data: imageData) {
@@ -142,5 +144,13 @@ import UIKit
             print("Error in \(#function): \(error)")
             return nil
         }
+    }
+}
+
+// MARK: - Convenience Init
+extension ViewModel {
+    convenience init(repository: RepositoryProtocol) async {
+        self.init()
+        self.setRepository(repository)
     }
 }

@@ -59,9 +59,3 @@ class Service: ServiceProtocol {
         return data
     }
 }
-
-protocol ServiceProtocol {
-    func fetchPage(pageNumber: Int) async throws -> NamedAPIResourceList
-    func fetchPokemon(at url: String) async throws -> Pokemon
-    func fetchImage(url: String) async throws -> Data
-}

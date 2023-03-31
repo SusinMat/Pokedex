@@ -7,17 +7,13 @@
 
 import UIKit
 
-actor Repository {
+actor Repository: RepositoryProtocol {
     var currentPokemonPage: Int = 0
 
-    lazy var service = Service.shared
+    lazy var service: ServiceProtocol = Service.shared
 
-    func resetPageCount() {
-        currentPokemonPage = 0
-    }
-
-    func incrementPageCount() {
-        currentPokemonPage += 1
+    func setService(_ service: ServiceProtocol) {
+        self.service = service
     }
 
     nonisolated func fetchImage(url: String) async throws -> Data {
@@ -58,5 +54,13 @@ class ImageCacheHelper {
             print("Error in \(#function): \(error)")
             return nil
         }
+    }
+}
+
+// MARK: - Convenience Init
+extension Repository {
+    init(service: ServiceProtocol) async {
+        self.init()
+        self.setService(service)
     }
 }
