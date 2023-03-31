@@ -1,5 +1,5 @@
 //
-//  Services.swift
+//  Service.swift
 //  Pokedex
 //
 //  Created by Matheus Martins Susin on 2022-03-23.
@@ -8,20 +8,20 @@
 import Foundation
 import SwiftUI
 
-class Services {
+class Service: ServiceProtocol {
     static let baseURL = "https://pokeapi.co/api/v2"
     var session: URLSession { return URLSession.shared }
     static let decoder = SnakeCaseJSONDecoder()
 
     var pokemonPageSize = 100
 
-    static let shared: Services = {
-        let instance = Services()
+    static let shared: Service = {
+        let instance = Service()
         return instance
     }()
 
     static func makeURLString(_ route: String) -> URL {
-        let urlString = "\(Services.baseURL)\(route)"
+        let urlString = "\(Service.baseURL)\(route)"
         guard let url = URL(string: urlString) else {
             preconditionFailure("\(#function) failed to produce valid URL from \(urlString)")
         }
@@ -32,10 +32,10 @@ class Services {
         let route = "pokemon"
         let limit = "limit=\(pokemonPageSize)"
         let offset = "offset=\(pageNumber * pokemonPageSize)"
-        let url = Services.makeURLString("/\(route)?\(limit)&\(offset)")
+        let url = Service.makeURLString("/\(route)?\(limit)&\(offset)")
         let request = URLRequest(url: url)
         let (data, _) = try await session.data(for: request, delegate: nil)
-        return try Services.decoder.decode(NamedAPIResourceList.self, from: data)
+        return try Service.decoder.decode(NamedAPIResourceList.self, from: data)
     }
 
     func fetchPokemon(at url: String) async throws -> Pokemon {
@@ -45,7 +45,7 @@ class Services {
         }
         let request = URLRequest(url: url)
         let (data, _) = try await session.data(for: request, delegate: nil)
-        let decodedPokemon = try Services.decoder.decode(Pokemon.self, from: data)
+        let decodedPokemon = try Service.decoder.decode(Pokemon.self, from: data)
         return decodedPokemon
     }
 
@@ -58,4 +58,10 @@ class Services {
         let (data, _) = try await session.data(for: request, delegate: nil)
         return data
     }
+}
+
+protocol ServiceProtocol {
+    func fetchPage(pageNumber: Int) async throws -> NamedAPIResourceList
+    func fetchPokemon(at url: String) async throws -> Pokemon
+    func fetchImage(url: String) async throws -> Data
 }

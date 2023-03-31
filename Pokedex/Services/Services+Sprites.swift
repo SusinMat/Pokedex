@@ -1,5 +1,5 @@
 //
-//  Services+Sprites.swift
+//  Service+Sprites.swift
 //  Pokedex
 //
 //  Created by Matheus Martins Susin on 2023-03-23.
@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Sprites
-extension Services {
+extension Service {
     static let baseSpriteURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
     enum SpriteRoute: String {
         case frontDefault = ""
@@ -18,6 +18,6 @@ extension Services {
     }
 
     static func makeSpriteURL(id: Int, sprite: SpriteRoute) -> String {
-        return Services.baseSpriteURL + sprite.rawValue + String(id)
+        return Service.baseSpriteURL + sprite.rawValue + String(id)
     }
 }

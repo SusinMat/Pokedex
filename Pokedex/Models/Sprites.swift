@@ -16,8 +16,8 @@ struct Sprites: Codable, Equatable, Hashable {
 
 extension Sprites {
     init(id: Int) {
-        func makeSpriteURL(sprite: Services.SpriteRoute) -> String{
-            return Services.makeSpriteURL(id: id, sprite: sprite)
+        func makeSpriteURL(sprite: Service.SpriteRoute) -> String {
+            return Service.makeSpriteURL(id: id, sprite: sprite)
         }
         let sprites = Sprites(frontDefault: makeSpriteURL(sprite: .frontDefault),
                               frontFemale: makeSpriteURL(sprite: .frontFemale),

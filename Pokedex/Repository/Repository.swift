@@ -10,7 +10,7 @@ import UIKit
 actor Repository {
     var currentPokemonPage: Int = 0
 
-    lazy var service = Services.shared
+    lazy var service = Service.shared
 
     func resetPageCount() {
         currentPokemonPage = 0

@@ -38,7 +38,7 @@ extension PokedexApp {
 extension PokedexApp {
     static func printFirstPage() async {
         do {
-            let firstPage = try await Services.shared.fetchPage(pageNumber: 1)
+            let firstPage = try await Service.shared.fetchPage(pageNumber: 1)
             print(firstPage)
         } catch(let error) {
             print("Error in \(#function): \(error)")
